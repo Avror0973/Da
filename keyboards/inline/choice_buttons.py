@@ -26,8 +26,8 @@ choice = InlineKeyboardMarkup(
 
                                   [
                                       InlineKeyboardButton(
-                                          text='✏️ Написать менеджеру',
-                                          url='https://t.me/iwonteatyou'
+                                          text='🔺WaySushi🔻',
+                                          url='https://t.me/waysushi'
                                       )
                                   ]
 

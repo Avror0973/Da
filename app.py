@@ -13,7 +13,7 @@ async def on_startup(dp):
         db.create_table_users()
     except Exception as err:
         print(err)
-
+    db.delete_users() # удаление пользователей из Базы данных
     print(db.select_all_users())
     await on_startup_notify(dp)
     await set_default_commands(dp)

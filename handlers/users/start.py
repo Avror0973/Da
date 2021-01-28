@@ -4,9 +4,11 @@ from aiogram import types
 from aiogram.dispatcher.filters.builtin import CommandStart
 from keyboards.inline.choice_buttons import choice
 
+from utils.misc import rate_limit
 from loader import dp, db
 
 
+@rate_limit(5)
 @dp.message_handler(CommandStart())
 async def bot_start(message: types.Message):
     name = message.from_user.full_name
@@ -25,3 +27,4 @@ async def bot_start(message: types.Message):
     #             f'Ты был занесен в базу',
     #             f'В базе <b>{count}</b> пользователей',
     #         ]))
+
