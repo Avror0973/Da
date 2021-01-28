@@ -32,6 +32,7 @@ class Database:
         CREATE TABLE Users (
             id int NOT NULL,
             Name varchar(255) NOT NULL,
+            number varchar(13),
             email varchar(255),
             PRIMARY KEY (id)
             );
