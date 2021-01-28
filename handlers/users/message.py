@@ -1,28 +1,27 @@
 from aiogram import types
+from aiogram.dispatcher import FSMContext
 
 from loader import dp, db, bot
 
 
+
 @dp.message_handler(commands='message')
-async def get_message(message: types.Message):
-    name = message.from_user.full_name
+async def get_message(message: types.Message, state: FSMContext):
+    await message.answer("Пришли сообщение которое нужно разослать пользователям из БД")
+    await state.set_state("message")
+
+
+@dp.message_handler(state="message")
+async def send_messages(message: types.Message, state: FSMContext):
+    message_text = message.text
     count = db.count_users()[0]
-    msg = db.select_all_users()
-    # await message.answer(
-    #     "\n".join(
-    #         [
-    #             f'Попробуем!',
-    #             f'В базе <b>{count}</b> пользователей',
-    #         ]))
-    print(msg)
+    users = db.select_all_users()
     count2 = 0
     stop_bot = 0
-    for i in msg:  # рассылка сообщения пользователям из БД
+    for i in users:  # рассылка сообщения пользователям из БД
         try:
-            await bot.send_message(chat_id=i[0], text="Тестовая рассылка")
+            await bot.send_message(chat_id=i[0], text=message_text)
             count2 += 1
         except:
             stop_bot += 1
-    print(count2)
-    print(stop_bot)
     await message.answer(f"""Отправлено {count2} пользователям из {count} пользователей""")
