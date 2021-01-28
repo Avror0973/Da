@@ -1,11 +1,12 @@
 from aiogram import types
 from aiogram.dispatcher import FSMContext
+from data.config import admins
 
 from loader import dp, db, bot
 
 
 
-@dp.message_handler(commands='message')
+@dp.message_handler(commands='message', user_id=admins)
 async def get_message(message: types.Message, state: FSMContext):
     await message.answer("Пришли сообщение которое нужно разослать пользователям из БД")
     await state.set_state("message")
@@ -25,3 +26,4 @@ async def send_messages(message: types.Message, state: FSMContext):
         except:
             stop_bot += 1
     await message.answer(f"""Отправлено {count2} пользователям из {count} пользователей""")
+    await state.finish()
