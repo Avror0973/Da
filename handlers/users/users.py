@@ -13,4 +13,8 @@ async def bot_start(message: types.Message):
                 f'Привет, {message.from_user.full_name}!',
                 f'В базе <b>{count}</b> пользователей',
             ]))
-    await message.answer()
+
+
+@dp.message_handler(commands='users')
+async def get_message(message: types.Message):
+    await message.answer("Команда доступна только администраторам бота")

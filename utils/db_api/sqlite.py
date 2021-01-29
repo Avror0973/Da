@@ -32,7 +32,7 @@ class Database:
         CREATE TABLE Users (
             id int NOT NULL,
             Name varchar(255) NOT NULL,
-            number varchar(13),
+            number varchar(255),
             email varchar(255),
             PRIMARY KEY (id)
             );
@@ -46,13 +46,13 @@ class Database:
         ])
         return sql, tuple(parameters.values())
 
-    def add_user(self, id: int, name: str, email: str = None):
+    def add_user(self, id: int, name: str, number: str = None, email: str = None):
         # SQL_EXAMPLE = "INSERT INTO Users(id, Name, email) VALUES(1, 'John', 'John@gmail.com')"
 
         sql = """
-        INSERT INTO Users(id, Name, email) VALUES(?, ?, ?)
+        INSERT INTO Users(id, Name, number, email) VALUES(?, ?, ?, ?)
         """
-        self.execute(sql, parameters=(id, name, email), commit=True)
+        self.execute(sql, parameters=(id, name, number, email), commit=True)
 
     def select_all_users(self):
         sql = """
@@ -78,21 +78,17 @@ class Database:
         """
         return self.execute(sql, parameters=(email, id), commit=True)
 
+    def update_user_number(self, number, id):
+        # SQL_EXAMPLE = "UPDATE Users SET email=mail@gmail.com WHERE id=12345"
+
+        sql = f"""
+        UPDATE Users SET number=? WHERE id=?
+        """
+        return self.execute(sql, parameters=(number, id), commit=True)
+
     def delete_users(self):
         self.execute("DELETE FROM Users WHERE TRUE", commit=True)
 
-    # def get_last_ten_users(self):
-    #     last_users = []
-    #     last_ten = self.execute("SELECT * FROM Users ORDER BY id DESC LIMIT 10")
-    #     print(last_ten)
-    #     for user in last_ten:
-    #         last_users.append(Users(
-    #             id=user[1],
-    #             name=user[2],
-    #             number=user[3],
-    #             email=user[4]
-    #         ))
-    #     return last_users
 
 
 
