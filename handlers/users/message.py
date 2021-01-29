@@ -11,6 +11,10 @@ async def get_message(message: types.Message, state: FSMContext):
     await message.answer("Пришли сообщение которое нужно разослать пользователям из БД\nДля отмены рассылки нажмите /cancel")
     await state.set_state("message")
 
+@dp.message_handler(commands='message')
+async def get_message(message: types.Message, state: FSMContext):
+    await message.answer("Команда доступна только администраторам бота")
+
 
 @dp.message_handler(state="message")
 async def send_messages(message: types.Message, state: FSMContext):
