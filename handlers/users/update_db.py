@@ -5,6 +5,7 @@ from aiogram.dispatcher.filters.builtin import Command
 from loader import dp, db
 
 
+
 @dp.message_handler(Command("email"))
 async def bot_start(message: types.Message, state: FSMContext):
     await message.answer("Пришли мне свой имейл")
@@ -18,3 +19,12 @@ async def enter_email(message: types.Message, state: FSMContext):
     user = db.select_user(id=message.from_user.id)
     await message.answer(f"Данные обновлены. Запись в БД: {user}")
     await state.finish()
+
+
+# @dp.message_handler(Command("data"))
+# async def get_data(message: types.Message, state: FSMContext):
+#     email = message.text
+#     db.update_user_email(email=email, id=message.from_user.id)
+#     user = db.get_last_ten_users()
+#     await message.answer(f"{user}")
+#     await state.finish()

@@ -6,4 +6,6 @@ async def set_default_commands(dp):
         types.BotCommand("start", "Перезапустить бота"),
         types.BotCommand("menu", "Главное меню"),
         types.BotCommand("email", "Ввести имейл"),
+        types.BotCommand("users", "Кол-во пользователей"),
+        types.BotCommand('message', "Рассылка"),
     ])

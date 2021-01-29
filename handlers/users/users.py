@@ -13,3 +13,4 @@ async def bot_start(message: types.Message):
                 f'Привет, {message.from_user.full_name}!',
                 f'В базе <b>{count}</b> пользователей',
             ]))
+    await message.answer()

@@ -81,6 +81,20 @@ class Database:
     def delete_users(self):
         self.execute("DELETE FROM Users WHERE TRUE", commit=True)
 
+    # def get_last_ten_users(self):
+    #     last_users = []
+    #     last_ten = self.execute("SELECT * FROM Users ORDER BY id DESC LIMIT 10")
+    #     print(last_ten)
+    #     for user in last_ten:
+    #         last_users.append(Users(
+    #             id=user[1],
+    #             name=user[2],
+    #             number=user[3],
+    #             email=user[4]
+    #         ))
+    #     return last_users
+
+
 
 def logger(statement):
     print(f"""
