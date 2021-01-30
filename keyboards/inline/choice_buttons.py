@@ -1,10 +1,8 @@
 from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
-from keyboards.inline.callback_datas import buy_callback, menu_callback
 
 
 
 
-# Вариант 2 - с помощью row_width и insert.
 choice = InlineKeyboardMarkup(
                               inline_keyboard=[
                                   [

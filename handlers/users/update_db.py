@@ -7,9 +7,11 @@ from loader import dp, db
 
 
 
-@dp.message_handler(Command("email"))
+@dp.message_handler(Command("adress"))
 async def bot_start(message: types.Message, state: FSMContext):
-    await message.answer("Пришли мне свой имейл\nДля отмены нажми на /cancel")
+    await message.answer("Пришлите ваш адрес чтобы мы его запомнили и вам "
+                         "не приходилось каждый раз его вводить при заказе."
+                         "\nДля отмены нажми на /cancel")
     await state.set_state("email")
 
 
@@ -23,7 +25,19 @@ async def enter_email(message: types.Message, state: FSMContext):
     else:
         db.update_user_email(email=email, id=message.from_user.id)
         user = db.select_user(id=message.from_user.id)
-        await message.answer(f"Данные обновлены. Запись в БД: {user}", reply_markup=choice)
+        user_data = []
+        for i in user[1:]:
+            if i == None:
+                user_data.append("- не добавлен")
+            else:
+                user_data.append(i)
+        text = (
+            "<b>Данные обновлены:</b>",
+            f"👤 Имя: {user_data[0]}",
+            f"📞 Контактный номер: {user_data[1]}",
+            f"📪 Адрес: {user_data[2]}"
+        )
+        await message.answer("\n".join(text), parse_mode='HTML', reply_markup=choice)
         await state.finish()
 
 
@@ -42,5 +56,17 @@ async def enter_email(message: types.Message, state: FSMContext):
     else:
         db.update_user_number(number=number, id=message.from_user.id)
         user = db.select_user(id=message.from_user.id)
-        await message.answer(f"Данные обновлены. Запись в БД: {user}", reply_markup=choice)
+        user_data = []
+        for i in user[1:]:
+            if i == None:
+                user_data.append("- не добавлена")
+            else:
+                user_data.append(i)
+        text = (
+            "<b>Данные обновлены:</b>",
+            f"👤 Имя: {user_data[0]}",
+            f"📞 Контактный номер: {user_data[1]}",
+            f"📪 Адрес: {user_data[2]}"
+        )
+        await message.answer("\n".join(text), parse_mode='HTML', reply_markup=choice)
         await state.finish()
