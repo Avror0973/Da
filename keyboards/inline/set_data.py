@@ -8,11 +8,11 @@ vybor = InlineKeyboardMarkup(
                                   [
                                       InlineKeyboardButton(
                                           text='✔️Да',
-                                          callback_data='my_orders'
+                                          callback_data='yes_set'
                                       ),
                                       InlineKeyboardButton(
                                           text='✖️Нет',
-                                          callback_data='my_info'
+                                          callback_data='no_set'
                                       )
                                   ]
                               ])

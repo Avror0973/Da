@@ -1,4 +1,5 @@
 from aiogram.utils.callback_data import CallbackData
 
-buy_callback = CallbackData("buy", "item_name", "quantity")
+
+user_info_callback = CallbackData("yes_set", "no_set")
 menu_callback = CallbackData("delivery", "my_orders", "my_info")

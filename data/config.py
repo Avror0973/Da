@@ -10,6 +10,8 @@ admins = [
     958479767,
 ]
 
+allowed_users = [312980854]
+
 ip = os.getenv("ip")
 
 aiogram_redis = {

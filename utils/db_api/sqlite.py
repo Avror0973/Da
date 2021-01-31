@@ -54,6 +54,15 @@ class Database:
         """
         self.execute(sql, parameters=(id, name, number, email), commit=True)
 
+    def select_last_ten_users(self):
+        sql = """
+        SELECT * FROM Users ORDER BY id DESC LIMIT 10
+        """
+        last_ten = self.execute(sql)
+        lst = []
+        print(last_ten)
+        # return self.execute(sql, fetchall=True)
+
     def select_all_users(self):
         sql = """
         SELECT * FROM Users
@@ -85,6 +94,13 @@ class Database:
         UPDATE Users SET number=? WHERE id=?
         """
         return self.execute(sql, parameters=(number, id), commit=True)
+
+    def update_user_name(self, name, id):
+        sql = f"""
+                UPDATE Users SET Name=? WHERE id=?
+                """
+        return self.execute(sql, parameters=(name, id), commit=True)
+
 
     def delete_users(self):
         self.execute("DELETE FROM Users WHERE TRUE", commit=True)

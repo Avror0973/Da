@@ -13,6 +13,7 @@ async def bot_start(message: types.Message):
                 f'Привет, {message.from_user.full_name}!',
                 f'В базе <b>{count}</b> пользователей',
             ]))
+    db.select_last_ten_users()
 
 
 @dp.message_handler(commands='users')
