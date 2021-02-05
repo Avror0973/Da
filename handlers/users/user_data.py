@@ -10,20 +10,25 @@ from loader import dp, db
 @dp.callback_query_handler(text_contains="yes_set")
 async def new_delivery(call: CallbackQuery, state: FSMContext):
     await call.answer(cache_time=60)
-    await call.message.answer("Пришли мне своё имя чтобы мы знали как к вам обращаться\n\nДля отмены нажми на /cancel")
+    await call.message.answer("Пришли мне своё имя чтобы мы знали как к вам обращаться"
+                              "\n\nДля пропуска этого шага нажми на /skip")
     await state.set_state("name")
 
 
 @dp.message_handler(state="name")
 async def enter_email(message: types.Message, state: FSMContext):
     name = message.text
-    if name == '/cancel':
-        await message.answer("Действие отменено", reply_markup=choice)
-        await state.finish()
+    user_name = message.from_user.full_name
+    if name == '/skip':
+        await message.answer(f"Ладно, будем звать вас {user_name.capitalize()}")
+        db.update_user_name(name=user_name, id=message.from_user.id)
+        await message.answer(f"{user_name.capitalize()} номером телефона не могли бы вы поделиться с нами?")
+        await state.set_state("number")
 
     else:
         db.update_user_name(name=name, id=message.from_user.id)
-        await message.answer("Спасибо, нам также нужен ваш номер чтобы предупредить когда доставим заказ по адресу\n\nДля того чтобы пропустить нажимай сюда➡️ /cancel")
+        await message.answer(f"{name.capitalize()}, теперь нам нужен ваш номер."
+                             f"\n\nЕсли не хотите делиться номером нажимайте на ➡️ /skip")
         await state.set_state("number")
 
 
@@ -31,8 +36,8 @@ async def enter_email(message: types.Message, state: FSMContext):
 async def enter_email(message: types.Message, state: FSMContext):
     number = message.text
 
-    if number == '/cancel':
-        await message.answer("Действие отменено", reply_markup=choice)
+    if number == '/skip':
+        await message.answer("Ну ладно, будем стучаться в дверь)")
         await state.finish()
 
     elif (match(r'[+7]{1}[0-9]{9}', number) and len(number) == 12) or match(r'[8]{1}[0-9]{9}', number) and len(number) == 11:

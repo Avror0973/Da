@@ -13,7 +13,7 @@ from loader import dp, db
 async def bot_start(message: types.Message, state: FSMContext):
     await message.answer("Пришлите ваш адрес чтобы мы его запомнили и вам "
                          "не приходилось каждый раз его вводить при заказе."
-                         "\nДля отмены нажми на /cancel")
+                         "\nДля пропуска этого шага нажми на /cancel")
     await state.set_state("email")
 
 
