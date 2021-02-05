@@ -22,7 +22,8 @@ async def enter_email(message: types.Message, state: FSMContext):
     if name == '/skip':
         await message.answer(f"Ладно, будем звать вас {user_name.capitalize()}")
         db.update_user_name(name=user_name, id=message.from_user.id)
-        await message.answer(f"{user_name.capitalize()} номером телефона не могли бы вы поделиться с нами?")
+        await message.answer(f"{user_name.capitalize()} ваш номер мы можем узнать?"
+                             f"\n\nДля пропуска этого шага можно нажать на /skip")
         await state.set_state("number")
 
     else:
@@ -38,11 +39,14 @@ async def enter_email(message: types.Message, state: FSMContext):
 
     if number == '/skip':
         await message.answer("Ну ладно, будем стучаться в дверь)")
-        await state.finish()
+        await message.answer("А адрес мы можем узнать?"
+                             "\n\n Для пропуска как обычно /skip")
+        await state.set_state("adress")
 
     elif (match(r'[+7]{1}[0-9]{9}', number) and len(number) == 12) or match(r'[8]{1}[0-9]{9}', number) and len(number) == 11:
         db.update_user_number(number=number, id=message.from_user.id)
-        await message.answer("Теперь нам нужен ваш адрес.\nБудет приятно если вы укажете вместе с районом.")
+        await message.answer("Теперь нам нужен ваш адрес.\nБудет приятно если вы укажете вместе с районом."
+                             "\n\n Для пропуска нажимай на /skip")
         await state.set_state('adress')
 
     else:
@@ -55,8 +59,8 @@ async def enter_email(message: types.Message, state: FSMContext):
 @dp.message_handler(state="adress")
 async def enter_email(message: types.Message, state: FSMContext):
     adress = message.text
-    if adress == '/cancel':
-        await message.answer("Действие отменено", reply_markup=choice)
+    if adress == '/skip':
+        await message.answer("Ну вы даёте😐\nКак мы по вашему должны доставлять еду?", reply_markup=choice)
         await state.finish()
 
     else:
