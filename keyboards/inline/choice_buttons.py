@@ -8,7 +8,7 @@ choice = InlineKeyboardMarkup(
                                   [
                                       InlineKeyboardButton(
                                           text='🚀Заказать доставку',
-                                          callback_data='delivery'
+                                          switch_inline_query_current_chat="меню"
                                       )
                                   ],
                                   [
