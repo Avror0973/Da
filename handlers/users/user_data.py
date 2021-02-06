@@ -1,7 +1,7 @@
 from aiogram import types
 from aiogram.dispatcher import FSMContext
 from keyboards.inline.choice_buttons import choice
-from aiogram.types import message, CallbackQuery
+from aiogram.types import message, CallbackQuery, ReplyKeyboardRemove
 from re import match
 
 from loader import dp, db
@@ -9,6 +9,7 @@ from loader import dp, db
 
 @dp.callback_query_handler(text_contains="yes_set")
 async def new_delivery(call: CallbackQuery, state: FSMContext):
+    await call.message.delete_reply_markup()
     await call.answer(cache_time=60)
     await call.message.answer("Пришли мне своё имя чтобы мы знали как к вам обращаться"
                               "\n\nДля пропуска этого шага нажми на /skip")

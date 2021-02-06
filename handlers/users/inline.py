@@ -6,7 +6,7 @@ from loader import dp, bot
 
 
 
-@dp.inline_handler(text="меню")
+@dp.inline_handler(text=["меню","суши"])
 async def empty_query(query: types.InlineQuery):
     user = query.from_user.id
     await query.answer(

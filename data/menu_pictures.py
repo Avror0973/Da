@@ -1,0 +1,7 @@
+menu_pics = {
+    "Бешеный лосось": "AgACAgIAAxkBAAILNWAdrs0ycUjUBSKR2vNBODRNbpNyAAKzsTEbu7PwSJYYi-6zsEMmUWiJni4AAwEAAwIAA20AAyJ4AQABHgQ",
+    "Горячий шик": "AgACAgIAAxkBAAILfmAeRbosSvpCeYmpRb0_b7s89gc8AAIKsTEbqH3xSNsmO3Q5ymQUm7rRly4AAwEAAwIAA3gAA1V9BgABHgQ",
+    "Банзай": "AgACAgIAAxkBAAILgGAeRdX3fTK3JMCPIzybMuSiEd_8AAILsTEbqH3xSCOsxXXOysS8gwvkly4AAwEAAwIAA3gAA22qBgABHgQ",
+    "Чёрный самурай": "AgACAgIAAxkBAAILgmAeRzPy9-maSaEHs1FTwmZ1nr9WAAIMsTEbqH3xSNg7Dwz9vkCq6qDoly4AAwEAAwIAA3gAAxqqBgABHgQ",
+    "Красивые роллы": "AgACAgIAAxkBAAILhGAeR087FZOO6_ilBriCzXuvckvCAAINsTEbqH3xSFS-lxKOQRQVWy4lmy4AAwEAAwIAA3gAA3xTAgABHgQ"}
+
