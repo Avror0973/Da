@@ -23,9 +23,9 @@ async def empty_query(query: types.InlineQuery):
             ),
             types.InlineQueryResultArticle(
                 id="2",
-                title="Бешенный лосось",
+                title="Бешеный лосось",
                 input_message_content=types.InputTextMessageContent(
-                    message_text="Бешенный лосось",
+                    message_text="Бешеный лосось",
                     parse_mode="HTML"
                 ),
                 thumb_url="https://thumb.tildacdn.com/tild6436-6131-4963-a134-663233333130/-/resize/352x/-/format/webp/IMG_9695.jpg",
