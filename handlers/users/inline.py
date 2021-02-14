@@ -1,13 +1,11 @@
 from aiogram import types
-from aiogram.dispatcher.filters import Command, CommandStart
 
-
-from loader import dp, bot
+from loader import dp
 
 
 
 @dp.inline_handler(text=["меню","суши"])
-async def empty_query(query: types.InlineQuery):
+async def sushi_menu(query: types.InlineQuery):
     user = query.from_user.id
     await query.answer(
         results=[
@@ -61,6 +59,66 @@ async def empty_query(query: types.InlineQuery):
                 ),
                 thumb_url="https://gdepoest.kz/images/70000001025756659/org/43419272_2088154364612764_735340801785728193_n.jpg",
                 description="600 рублей\nДля фотографий самое - то"
+            ),
+        ],
+    )
+
+
+@dp.inline_handler(text=["напитки"])
+async def sushi_menu(query: types.InlineQuery):
+    user = query.from_user.id
+    await query.answer(
+        results=[
+            types.InlineQueryResultArticle(
+                id="1",
+                title="Coca Cola",
+                input_message_content=types.InputTextMessageContent(
+                    message_text="Coca Cola",
+                    parse_mode="HTML"
+                ),
+                thumb_url="https://cdn.wallpapersafari.com/30/48/K1mUko.jpg",
+                description="80 рублей\nОбъём 0.33л"
+            ),
+            types.InlineQueryResultArticle(
+                id="2",
+                title="Fanta",
+                input_message_content=types.InputTextMessageContent(
+                    message_text="Fanta",
+                    parse_mode="HTML"
+                ),
+                thumb_url="https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/5fdf5e82734197.5d2665b61fe38.png",
+                description="80 рублей\nОбъём 0.33л"
+
+            ),
+            types.InlineQueryResultArticle(
+                id="3",
+                title="Lipton - чёрный чай",
+                input_message_content=types.InputTextMessageContent(
+                    message_text="Lipton",
+                    parse_mode="HTML"
+                ),
+                thumb_url="https://cdn1.ozone.ru/multimedia/1021760524.jpg",
+                description="80 рублей\nОбъём 0.8л"
+            ),
+            types.InlineQueryResultArticle(
+                id="4",
+                title="Lipton - лимон",
+                input_message_content=types.InputTextMessageContent(
+                    message_text="Lipton - Лимон",
+                    parse_mode="HTML"
+                ),
+                thumb_url="https://mangal-viborg.ru/img/16783277_1920.jpg",
+                description="80 рублей\nОбъём 0.8л"
+            ),
+            types.InlineQueryResultArticle(
+                id="5",
+                title="Pepsi",
+                input_message_content=types.InputTextMessageContent(
+                    message_text="Pepsi",
+                    parse_mode="HTML"
+                ),
+                thumb_url="https://pbs.twimg.com/tweet_video_thumb/CUv3vIaUsAQY20F.png",
+                description="80 рублей\nОбъём 0.33л"
             ),
         ],
     )
