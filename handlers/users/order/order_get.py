@@ -2,9 +2,6 @@ from aiogram import types
 from loader import dp, bot
 from aiogram.dispatcher import FSMContext
 import time
-from aiogram.types import CallbackQuery
-from keyboards.inline.choice_consent import consent
-from keyboards.inline.choice_buttons import choice
 from data.menu_pictures import menu_pics
 from data.prices import sushi_price
 
@@ -40,6 +37,7 @@ async def order_quantity(message: types.Message, state: FSMContext):
         await bot.send_chat_action(chat_id=message.chat.id, action="typing", )  # эффект "печатает"
         time.sleep(0.5)
         await message.answer("Уже готовим")
+        await state.finish()
     else:
         await message.answer("Введите количество цифрами")
         await state.set_state("quantity")

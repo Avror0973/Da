@@ -17,6 +17,12 @@ consent = InlineKeyboardMarkup(
                                   ],
                                   [
                                       InlineKeyboardButton(
+                                          text='🧺 Корзина',
+                                          callback_data="checkout"
+                                      )
+                                  ],
+                                  [
+                                      InlineKeyboardButton(
                                           text='💵 Оформить заказ',
                                           callback_data="checkout"
                                       )
