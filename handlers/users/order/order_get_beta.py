@@ -8,6 +8,7 @@ from data.prices import sushi_price
 
 
 menu_list = ["Бешеный лосось", "Горячий шик", "Банзай", "Чёрный самурай", "Красивые роллы"]
+drink_list = ['Coca Cola', 'Fanta', 'Lipton', 'Lipton - Лимон', 'Pepsi']
 user_basket = {}
 
 
@@ -29,6 +30,7 @@ async def show_basket(call: CallbackQuery, state=FSMContext):
 
 
 @dp.message_handler(text=menu_list)
+@dp.message_handler(text=drink_list)
 async def menu_get(message: Message, state=FSMContext):
     user_choice = message.text  # Выбор пользователя
     await state.update_data(choice = user_choice)
@@ -56,8 +58,6 @@ async def order_quantity(message: Message, state: FSMContext):
         await message.answer("<b>Ваш заказ:</b>\n\n"
                              f"{choice} {quantity}шт {choice_price}₽\n\n"
                              f"Общая стоимость заказа {int(quantity) * choice_price}₽", parse_mode='HTML')
-        await bot.send_chat_action(chat_id=message.chat.id, action="typing", )  # эффект "печатает"
-        time.sleep(0.5)
         await message.answer("Еще чего ни будь?", reply_markup=consent)
         await state.finish()
     else:
