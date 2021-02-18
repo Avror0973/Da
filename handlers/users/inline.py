@@ -58,7 +58,7 @@ async def sushi_menu(query: types.InlineQuery):
                     parse_mode="HTML"
                 ),
                 thumb_url="https://gdepoest.kz/images/70000001025756659/org/43419272_2088154364612764_735340801785728193_n.jpg",
-                description="600 рублей\nДля фотографий самое - то"
+                description="600 рублей\n2 порции по 8 штук"
             ),
         ],
     )
@@ -76,8 +76,8 @@ async def sushi_menu(query: types.InlineQuery):
                     message_text="Coca Cola",
                     parse_mode="HTML"
                 ),
-                thumb_url="https://cdn.wallpapersafari.com/30/48/K1mUko.jpg",
-                description="80 рублей\nОбъём 0.33л"
+                thumb_url="https://ешь-суши.рф/assets/images/products/232/coca-cola-0-5.jpg",
+                description="105 рублей\nОбъём 0.45л"
             ),
             types.InlineQueryResultArticle(
                 id="2",
@@ -98,7 +98,7 @@ async def sushi_menu(query: types.InlineQuery):
                     parse_mode="HTML"
                 ),
                 thumb_url="https://cdn1.ozone.ru/multimedia/1021760524.jpg",
-                description="80 рублей\nОбъём 0.8л"
+                description="120 рублей\nОбъём 0.8л"
             ),
             types.InlineQueryResultArticle(
                 id="4",
@@ -108,7 +108,7 @@ async def sushi_menu(query: types.InlineQuery):
                     parse_mode="HTML"
                 ),
                 thumb_url="https://mangal-viborg.ru/img/16783277_1920.jpg",
-                description="80 рублей\nОбъём 0.8л"
+                description="120 рублей\nОбъём 0.8л"
             ),
             types.InlineQueryResultArticle(
                 id="5",
