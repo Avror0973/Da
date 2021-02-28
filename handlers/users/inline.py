@@ -4,7 +4,7 @@ from loader import dp
 
 
 
-@dp.inline_handler(text=["меню","суши"])
+@dp.inline_handler(text=["суши"])
 async def sushi_menu(query: types.InlineQuery):
     user = query.from_user.id
     await query.answer(
