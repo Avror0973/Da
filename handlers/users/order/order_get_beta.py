@@ -13,15 +13,27 @@ drink_list = ['Coca Cola', 'Fanta', 'Lipton', 'Lipton - Лимон', 'Pepsi']
 
 
 @dp.callback_query_handler(text_contains="menu")
-async def get_menu(call: CallbackQuery):
-    await call.message.delete_reply_markup() # Удаление предыдущей инлайн клавиатуры
+async def get_menu(call: CallbackQuery, state=FSMContext):
+    # Удаление предыдущей инлайн клавиатуры
+    await call.message.delete_reply_markup()
     await call.answer(cache_time=60)
+    # Создание стейта со словарем для хранения информации
+    await state.update_data(choice=['Горячий шик'], choice_quantity=[], total_price=[] )
+    # await state.update_data(choice={'choice_food': ['Горячий шик'], 'choice_quantity': [], 'total_price': []})
     await call.message.answer("Выбирайте📲", reply_markup=consent)
 
 
 @dp.callback_query_handler(text_contains="basket")
 async def show_basket(call: CallbackQuery, state=FSMContext):
     await call.message.delete_reply_markup()
+    data = await state.get_data()
+    print(data)
+    print(data.get('choice'))
+    # print(data['choice_food'])
+    #
+    # data = await state.get_data()
+    # choice = data.get('choice')
+
     await call.answer(cache_time=60)
     await call.message.answer("Ваша корзина пуста", reply_markup=consent)
 
