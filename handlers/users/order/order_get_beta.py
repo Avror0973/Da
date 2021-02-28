@@ -6,6 +6,22 @@ import time
 from data.menu_pictures import menu_pics
 from data.prices import sushi_price
 
+def print_basket(data):
+    len_all = len(data['choice'])
+    text = '<b>Ваша корзина:</b>\n\n'
+
+    #Вытащенные данные из словаря
+    choice = data['choice']
+    quantity = data['choice_quantity']
+    total = data['total_price']
+
+    # Счетчики
+    total_sum = 0
+    for item in range(len_all):
+        text += f'<i>{item+1}) {choice[item]} {quantity[item]}.шт по {total[item]}₽</i>\n'
+        total_sum += total[item]*quantity[item]
+    text += f'\n\nОбщая сумма - {total_sum}₽'
+    return text
 
 menu_list = ["Бешеный лосось", "Горячий шик", "Банзай", "Чёрный самурай", "Красивые роллы"]
 drink_list = ['Coca Cola', 'Fanta', 'Lipton', 'Lipton - Лимон', 'Pepsi']
@@ -26,27 +42,16 @@ async def get_menu(call: CallbackQuery, state=FSMContext):
 async def show_basket(call: CallbackQuery, state=FSMContext):
     await call.message.delete_reply_markup()\
     # TODO работа с корзиной
+
     # Work with state for basket
     data = await state.get_data()
-    print(data)
-
-    user_choice = data.get('choice')
-    print(user_choice)
-    # user_choice.append('sushi')
-    # await state.update_data(choice=user_choice)
-    data2 = await state.get_data()
-    print(data2)
-    # print(data['choice_food'])
-    #
-    # data = await state.get_data()
-    # choice = data.get('choice')
-
+    text = print_basket(data)
     await call.answer(cache_time=60)
-    await call.message.answer("Ваша корзина пуста", reply_markup=consent)
+    await call.message.answer(text, reply_markup=consent)
 
 
-@dp.message_handler(text=menu_list)
-@dp.message_handler(text=drink_list)
+@dp.message_handler(text=menu_list, state="*")
+@dp.message_handler(text=drink_list, state="*")
 async def menu_get(message: Message, state=FSMContext):
     user_choice = message.text  # Выбор пользователя
 
@@ -84,7 +89,7 @@ async def order_quantity(message: Message, state: FSMContext):
         # Другие переменные
         quantity = int(message.text)  # сообщение пользователя
         print(type(quantity))
-        total_sum = quantity * sushi_price[choice[-1]]
+        total_sum = sushi_price[choice[-1]]
         print(total_sum)
 
         # Обновление данных списков для последующей записи в FSM
@@ -95,17 +100,19 @@ async def order_quantity(message: Message, state: FSMContext):
 
         await state.update_data(choice_quantity=choice_quantity, total_price=choice_total) # Обновляем значение словаря в стейте
         data2 = await state.get_data()
-        print(data2)
+        print(len(data2['choice']))
 
 
-
+        answer_message = print_basket(data2)
         await bot.send_chat_action(chat_id=message.chat.id, action="typing", )  # эффект "печатает"
-        await message.answer("<b>Ваш заказ:</b>\n\n"
-                             f"{choice[-1]} {quantity}шт {total_sum}₽\n\n"
-                             f"Общая стоимость заказа {total_sum}₽", parse_mode='HTML')
+        await message.answer(answer_message)
+        # await message.answer("<b>Ваш заказ:</b>\n\n"
+        #                      f"{choice[-1]} {quantity}шт {total_sum}₽\n\n"
+        #                      f"Общая стоимость заказа {total_sum}₽", parse_mode='HTML')
         await message.answer("Еще чего ни будь?", reply_markup=consent)
         await state.set_state("*")
         # await state.finish()
+
     else:
         await message.answer("Введите количество цифрами")
         await state.set_state("quantity")

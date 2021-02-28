@@ -47,3 +47,5 @@ from data.prices import sushi_price
 # async def cancel(message: types.Message, state: FSMContext):
 #     await message.answer("Заказ отменен")
 #     await state.finish()
+
+
