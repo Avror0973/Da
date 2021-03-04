@@ -29,13 +29,14 @@ class Database:
 
     def create_table_users(self):
         sql = """
-        CREATE TABLE Users (
-            id int NOT NULL,
-            Name varchar(255) NOT NULL,
-            number varchar(255),
-            email varchar(255),
-            PRIMARY KEY (id)
-            );
+                CREATE TABLE "Users" (
+                    "id" INTEGER NOT NULL UNIQUE,
+                    "user_id" INTEGER NOT NULL UNIQUE,
+                    "name" TEXT,
+                    "contact" TEXT UNIQUE,
+                    "address" INTEGER,
+                    PRIMARY KEY("id" AUTOINCREMENT)
+);
 """
         self.execute(sql, commit=True)
 
@@ -46,22 +47,20 @@ class Database:
         ])
         return sql, tuple(parameters.values())
 
-    def add_user(self, id: int, name: str, number: str = None, email: str = None):
+    def add_user(self, user_id: int, name: str, contact: str = None, address: str = None):
         # SQL_EXAMPLE = "INSERT INTO Users(id, Name, email) VALUES(1, 'John', 'John@gmail.com')"
 
         sql = """
-        INSERT INTO Users(id, Name, number, email) VALUES(?, ?, ?, ?)
+        INSERT INTO Users(user_id, name, contact, address) VALUES(?, ?, ?, ?)
         """
-        self.execute(sql, parameters=(id, name, number, email), commit=True)
+        self.execute(sql, parameters=(user_id, name, contact, address), commit=True)
 
     def select_last_ten_users(self):
         sql = """
         SELECT * FROM Users ORDER BY id DESC LIMIT 10
         """
-        last_ten = self.execute(sql)
-        lst = []
-        print(last_ten)
-        # return self.execute(sql, fetchall=True)
+
+        return self.execute(sql, fetchall=True)
 
     def select_all_users(self):
         sql = """
@@ -79,27 +78,27 @@ class Database:
     def count_users(self):
         return self.execute("SELECT COUNT(*) FROM Users;", fetchone=True)
 
-    def update_user_email(self, email, id):
+    def update_user_address(self, address, user_id):
         # SQL_EXAMPLE = "UPDATE Users SET email=mail@gmail.com WHERE id=12345"
 
         sql = f"""
-        UPDATE Users SET email=? WHERE id=?
+        UPDATE Users SET address=? WHERE user_id=?
         """
-        return self.execute(sql, parameters=(email, id), commit=True)
+        return self.execute(sql, parameters=(address, user_id), commit=True)
 
-    def update_user_number(self, number, id):
+    def update_user_number(self, contact, user_id):
         # SQL_EXAMPLE = "UPDATE Users SET email=mail@gmail.com WHERE id=12345"
 
         sql = f"""
-        UPDATE Users SET number=? WHERE id=?
+        UPDATE Users SET contact=? WHERE user_id=?
         """
-        return self.execute(sql, parameters=(number, id), commit=True)
+        return self.execute(sql, parameters=(contact, user_id), commit=True)
 
-    def update_user_name(self, name, id):
+    def update_user_name(self, name, user_id):
         sql = f"""
-                UPDATE Users SET Name=? WHERE id=?
+                UPDATE Users SET name=? WHERE user_id=?
                 """
-        return self.execute(sql, parameters=(name, id), commit=True)
+        return self.execute(sql, parameters=(name, user_id), commit=True)
 
 
     def delete_users(self):

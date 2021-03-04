@@ -7,12 +7,13 @@ from data.config import admins
 async def bot_start(message: types.Message):
     name = message.from_user.full_name
     count = db.count_users()[0]
-    await message.answer(
-        "\n".join(
-            [
-                f'Привет, {message.from_user.full_name}!',
-                f'В базе <b>{count}</b> пользователей',
-            ]))
+    print(count, '^^^^^^^^^^^^^^^^^')
+    last_ten = db.select_last_ten_users()
+    print(last_ten)
+    text = f'Всего пользователей в базе: {count}.\nПоследние 10 пользователей:\n'
+    for user in last_ten:
+        text += f'👤<a href="tg://user?id={user[1]}">{user[2]}</a>  📱{user[3]} 📍{user[4]}\n'
+    await message.answer(text)
     db.select_last_ten_users()
 
 

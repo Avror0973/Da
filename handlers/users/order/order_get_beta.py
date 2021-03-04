@@ -95,7 +95,7 @@ async def checkout_order(call: CallbackQuery, state=FSMContext):
     now = datetime.now()
     await call.message.delete_reply_markup()
     await call.message.answer('Ваш заказ принят\n'
-                              f'Ожидайте нашего курьера к {now.hour}:{now.minute}',
+                              f'Ожидайте нашего курьера к {now.hour+1}:{now.minute}',
                               reply_markup=choice)
     await state.finish()
 

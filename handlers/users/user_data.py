@@ -22,13 +22,13 @@ async def enter_email(message: types.Message, state: FSMContext):
     user_name = message.from_user.full_name
     if name == '/skip':
         await message.answer(f"Ладно, будем звать вас {user_name.capitalize()}")
-        db.update_user_name(name=user_name, id=message.from_user.id)
-        await message.answer(f"{user_name.capitalize()} ваш номер мы можем узнать?"
+        db.update_user_name(name=user_name, user_id=message.from_user.id)
+        await message.answer(f"{user_name.capitalize()}ваш номер мы можем узнать?"
                              f"\n\nДля пропуска этого шага можно нажать на /skip")
         await state.set_state("number")
 
     else:
-        db.update_user_name(name=name, id=message.from_user.id)
+        db.update_user_name(name=name, user_id=message.from_user.id)
         await message.answer(f"{name.capitalize()}, теперь нам нужен ваш номер."
                              f"\n\nЕсли не хотите делиться номером нажимайте на ➡️ /skip")
         await state.set_state("number")
@@ -45,7 +45,7 @@ async def enter_email(message: types.Message, state: FSMContext):
         await state.set_state("adress")
 
     elif (match(r'[+7]{1}[0-9]{9}', number) and len(number) == 12) or match(r'[8]{1}[0-9]{9}', number) and len(number) == 11:
-        db.update_user_number(number=number, id=message.from_user.id)
+        db.update_user_number(contact=number, user_id=message.from_user.id)
         await message.answer("Теперь нам нужен ваш адрес.\nБудет приятно если вы укажете вместе с районом."
                              "\n\n Для пропуска нажимай на /skip")
         await state.set_state('adress')
@@ -65,10 +65,10 @@ async def enter_email(message: types.Message, state: FSMContext):
         await state.finish()
 
     else:
-        db.update_user_email(email=adress, id=message.from_user.id)
-        user = db.select_user(id=message.from_user.id)
+        db.update_user_address(address=adress, user_id=message.from_user.id)
+        user = db.select_user(user_id=message.from_user.id)
         user_data = []
-        for i in user[1:]:
+        for i in user[2:]:
             if i == None:
                 user_data.append("- не добавлен")
             else:

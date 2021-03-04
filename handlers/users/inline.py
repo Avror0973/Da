@@ -17,7 +17,7 @@ async def sushi_menu(query: types.InlineQuery):
                     parse_mode="HTML"
                 ),
                 thumb_url="https://avatars.mds.yandex.net/get-altay/1680678/2a0000016a3a9be06c574da331838e5d3f99/XXL",
-                description="330 рублей"
+                description="180 рублей"
             ),
             types.InlineQueryResultArticle(
                 id="2",
@@ -27,18 +27,18 @@ async def sushi_menu(query: types.InlineQuery):
                     parse_mode="HTML"
                 ),
                 thumb_url="https://thumb.tildacdn.com/tild6436-6131-4963-a134-663233333130/-/resize/352x/-/format/webp/IMG_9695.jpg",
-                description="330 рублей"
+                description="180 рублей"
 
             ),
             types.InlineQueryResultArticle(
                 id="3",
-                title="Банзай 2-я порция",
+                title="Банзай",
                 input_message_content=types.InputTextMessageContent(
                     message_text="Банзай",
                     parse_mode="HTML"
                 ),
                 thumb_url="https://sushikoto.ru/wp-content/uploads/2020/01/2020-05-05-13-47-52-e1595417307812.jpg",
-                description="600 рублей"
+                description="250 рублей"
             ),
             types.InlineQueryResultArticle(
                 id="4",
@@ -48,17 +48,17 @@ async def sushi_menu(query: types.InlineQuery):
                     parse_mode="HTML"
                 ),
                 thumb_url="https://im0-tub-ru.yandex.net/i?id=e97455c94100a7575295129a485b6b33-l&n=13",
-                description="399 рублей"
+                description="250 рублей"
             ),
             types.InlineQueryResultArticle(
                 id="5",
-                title="Красивые роллы 2-я порция",
+                title="Красивые роллы",
                 input_message_content=types.InputTextMessageContent(
                     message_text="Красивые роллы",
                     parse_mode="HTML"
                 ),
                 thumb_url="https://gdepoest.kz/images/70000001025756659/org/43419272_2088154364612764_735340801785728193_n.jpg",
-                description="600 рублей\n2 порции по 8 штук"
+                description="300 рублей"
             ),
         ],
     )

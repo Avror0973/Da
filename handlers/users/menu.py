@@ -35,9 +35,9 @@ async def user_info(call: CallbackQuery):
     await call.answer(cache_time=60)
     callback_data = call.data
     logging.info(f"{callback_data=}")
-    user = db.select_user(id=call.from_user.id)
+    user = db.select_user(user_id=call.from_user.id)
     user_data = []
-    for i in user[1:]:
+    for i in user[2:]:
         if i == None:
             user_data.append("- нету данных")
         else:
