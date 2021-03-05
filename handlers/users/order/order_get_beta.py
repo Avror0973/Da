@@ -1,18 +1,16 @@
 from aiogram.types import CallbackQuery, ReplyKeyboardRemove, Message
+from aiogram.dispatcher import FSMContext
+
 from keyboards.inline.choice_consent import consent
 from keyboards.inline.choice_buttons import choice
 from loader import dp, bot, db
-from aiogram.dispatcher import FSMContext
-import time
 from data.menu_pictures import menu_pics
 from data.prices import sushi_price
 from handlers.users.order.functions import print_basket
 from datetime import datetime
 
-
 menu_list = ["Бешеный лосось", "Горячий шик", "Банзай", "Чёрный самурай", "Красивые роллы"]
 drink_list = ['Coca Cola', 'Fanta', 'Lipton', 'Lipton - Лимон', 'Pepsi']
-
 
 
 @dp.callback_query_handler(text_contains="menu")
@@ -63,18 +61,19 @@ async def menu_get(message: Message, state=FSMContext):
 @dp.message_handler(state="quantity")
 async def order_quantity(message: Message, state: FSMContext):
     if message.text.isdigit():
-        data = await state.get_data() # вытаскиваем данные из стейта
+        data = await state.get_data()  # вытаскиваем данные из стейта
         # Переменные с FSM
-        choice = data.get('choice') # Вытаскиваем список с выбором пользователя
-        choice_quantity = data.get('choice_quantity') # вытаскиваем список с количеством
-        choice_total = data.get('total_price') # Вытаскиваем список с общей суммой для каждой позиции
+        choice = data.get('choice')  # Вытаскиваем список с выбором пользователя
+        choice_quantity = data.get('choice_quantity')  # вытаскиваем список с количеством
+        choice_total = data.get('total_price')  # Вытаскиваем список с общей суммой для каждой позиции
         # Другие переменные
         quantity = int(message.text)  # сообщение пользователя
         total_sum = sushi_price[choice[-1]]
         # Обновление данных списков для последующей записи в FSM
-        choice_quantity.append(quantity) #Обновление списка с кол-ом
-        choice_total.append(total_sum) #Обновление списка с общей суммой
-        await state.update_data(choice_quantity=choice_quantity, total_price=choice_total) # Обновляем значение словаря в стейте
+        choice_quantity.append(quantity)  # Обновление списка с кол-ом
+        choice_total.append(total_sum)  # Обновление списка с общей суммой
+        await state.update_data(choice_quantity=choice_quantity,
+                                total_price=choice_total)  # Обновляем значение словаря в стейте
         data2 = await state.get_data()
         answer_message = print_basket(data2)
         await bot.send_chat_action(chat_id=message.chat.id, action="typing", )  # эффект "печатает"
@@ -94,9 +93,9 @@ async def checkout_order(call: CallbackQuery, state=FSMContext):
     user_id = call.from_user.id
     await call.message.delete_reply_markup()
     await call.message.answer('Ваш заказ принят\n'
-                              f'Ожидайте нашего курьера к {now.hour+4}:{now.minute}',
+                              f'Ожидайте нашего курьера к {now.hour + 4}:{now.minute}',
                               reply_markup=choice)
-    db.new_order(user_id, 'Умар', 'Горячий шик - 2шт', 'Старая 24', '+79990001122', 0)
+    db.new_order(user_id, 'Умар', 'Горячий шик - 2шт', 'Старая 24', '+79990001122', 800, 0)
     await state.finish()
 
 

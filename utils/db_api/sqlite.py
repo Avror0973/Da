@@ -113,12 +113,16 @@ class Database:
 
     # Новый заказ
     def new_order(self, user_id: int, customer_name: str, order_data: str, order_address: str,
-                  order_contact: str = None, order_status: str = None):
+                  order_contact: str, order_check: int, order_status: str = None):
         sql = """
-        INSERT INTO Orders(user_id, customer_name, order_data, order_adress, order_contact, order_status) 
-        VALUES(?, ?, ?, ?, ?, ?)
+        INSERT INTO Orders(user_id, customer_name, order_data, order_address, order_contact, order_check, order_status) 
+        VALUES(?, ?, ?, ?, ?, ?, ?)
         """
-        self.execute(sql, parameters=(user_id, customer_name, order_data, order_address, order_contact, order_status), commit=True)
+        self.execute(sql, parameters=(user_id, customer_name, order_data, order_address, order_contact, order_check, order_status), commit=True)
+
+
+    def show_orders(self, user_id):
+        pass
 
 
 
