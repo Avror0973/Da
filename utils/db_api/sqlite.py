@@ -47,6 +47,7 @@ class Database:
         ])
         return sql, tuple(parameters.values())
 
+    # Using
     def add_user(self, user_id: int, name: str, contact: str = None, address: str = None):
         # SQL_EXAMPLE = "INSERT INTO Users(id, Name, email) VALUES(1, 'John', 'John@gmail.com')"
 
@@ -55,6 +56,7 @@ class Database:
         """
         self.execute(sql, parameters=(user_id, name, contact, address), commit=True)
 
+    # Using
     def select_last_ten_users(self):
         sql = """
         SELECT * FROM Users ORDER BY id DESC LIMIT 10
@@ -62,12 +64,14 @@ class Database:
 
         return self.execute(sql, fetchall=True)
 
+    # Using
     def select_all_users(self):
         sql = """
         SELECT * FROM Users
         """
         return self.execute(sql, fetchall=True)
 
+    # Using
     def select_user(self, **kwargs):
         # SQL_EXAMPLE = "SELECT * FROM Users where id=1 AND Name='John'"
         sql = "SELECT * FROM Users WHERE "
@@ -75,6 +79,7 @@ class Database:
 
         return self.execute(sql, parameters=parameters, fetchone=True)
 
+    # Using
     def count_users(self):
         return self.execute("SELECT COUNT(*) FROM Users;", fetchone=True)
 
@@ -86,6 +91,7 @@ class Database:
         """
         return self.execute(sql, parameters=(address, user_id), commit=True)
 
+    # Using
     def update_user_number(self, contact, user_id):
         # SQL_EXAMPLE = "UPDATE Users SET email=mail@gmail.com WHERE id=12345"
 
@@ -94,15 +100,25 @@ class Database:
         """
         return self.execute(sql, parameters=(contact, user_id), commit=True)
 
+    # Using
     def update_user_name(self, name, user_id):
         sql = f"""
                 UPDATE Users SET name=? WHERE user_id=?
                 """
         return self.execute(sql, parameters=(name, user_id), commit=True)
 
-
+    # Using
     def delete_users(self):
         self.execute("DELETE FROM Users WHERE TRUE", commit=True)
+
+    # Новый заказ
+    def new_order(self, user_id: int, customer_name: str, order_data: str, order_address: str,
+                  order_contact: str = None, order_status: str = None):
+        sql = """
+        INSERT INTO Orders(user_id, customer_name, order_data, order_adress, order_contact, order_status) 
+        VALUES(?, ?, ?, ?, ?, ?)
+        """
+        self.execute(sql, parameters=(user_id, customer_name, order_data, order_address, order_contact, order_status), commit=True)
 
 
 

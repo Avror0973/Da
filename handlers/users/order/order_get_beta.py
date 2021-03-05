@@ -1,7 +1,7 @@
 from aiogram.types import CallbackQuery, ReplyKeyboardRemove, Message
 from keyboards.inline.choice_consent import consent
 from keyboards.inline.choice_buttons import choice
-from loader import dp, bot
+from loader import dp, bot, db
 from aiogram.dispatcher import FSMContext
 import time
 from data.menu_pictures import menu_pics
@@ -29,8 +29,6 @@ async def get_menu(call: CallbackQuery, state=FSMContext):
 @dp.callback_query_handler(text_contains="basket", state="*")
 async def show_basket(call: CallbackQuery, state=FSMContext):
     await call.message.delete_reply_markup()
-
-
     # Work with state for basket
     data = await state.get_data()
     text = print_basket(data)
@@ -93,10 +91,12 @@ async def order_quantity(message: Message, state: FSMContext):
 @dp.callback_query_handler(text_contains="checkout", state="*")
 async def checkout_order(call: CallbackQuery, state=FSMContext):
     now = datetime.now()
+    user_id = call.from_user.id
     await call.message.delete_reply_markup()
     await call.message.answer('Ваш заказ принят\n'
-                              f'Ожидайте нашего курьера к {now.hour+1}:{now.minute}',
+                              f'Ожидайте нашего курьера к {now.hour+4}:{now.minute}',
                               reply_markup=choice)
+    db.new_order(user_id, 'Умар', 'Горячий шик - 2шт', 'Старая 24', '+79990001122', 0)
     await state.finish()
 
 
