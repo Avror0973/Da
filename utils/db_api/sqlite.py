@@ -121,10 +121,14 @@ class Database:
         self.execute(sql, parameters=(user_id, customer_name, order_data, order_address, order_contact, order_check, order_status), commit=True)
 
 
-    def show_orders(self, user_id):
-        pass
+    def show_orders(self, user):
+        sql = """
+        SELECT * FROM Orders WHERE user_id=?
+        """
 
+        return self.execute(sql, parameters=user, commit=True)
 
+# ORDER BY order_id DESC LIMIT 5
 
 
 def logger(statement):

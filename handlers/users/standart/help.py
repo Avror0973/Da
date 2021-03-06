@@ -12,16 +12,13 @@ async def bot_help(message: types.Message):
                          "/message - рассылка\n\n"
                          "<b>Команды для всех</b>\n"
                          "/help - инструкции по использованию бота\n"
-                         "/menu - книга\n")
+                         "/menu - меню\n")
 
 
 @dp.message_handler(CommandHelp())
 async def bot_help(message: types.Message):
     text = ("<b>Список команд: </b>",
             "/start - Начать работу",
-            "/help - Получить справку",
-            "\n<b>Команды для админов:</b>",
-            "/users - кол-во пользователей в боте",
-            "/message - отправить сообщение пользователям бота")
+            "/help - Получить справку",)
     
     await message.answer("\n".join(text), parse_mode='HTML')

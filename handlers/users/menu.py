@@ -24,6 +24,10 @@ async def new_delivery(call: CallbackQuery):
 
 @dp.callback_query_handler(text_contains="my_orders")
 async def user_orders(call: CallbackQuery):
+    user_id = call.from_user.id
+    print(type(user_id))
+    last_orders = db.show_orders(user_id)
+    print(last_orders)
     await call.answer(cache_time=60)
     callback_data = call.data
     logging.info(f"{callback_data=}")
