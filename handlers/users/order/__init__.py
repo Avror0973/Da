@@ -1,1 +1,1 @@
-from .order_get_beta import dp
+from .order_get import dp

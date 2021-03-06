@@ -123,12 +123,13 @@ class Database:
 
     def show_orders(self, user):
         sql = """
-        SELECT * FROM Orders WHERE user_id=?
+        SELECT * FROM Orders
         """
 
-        return self.execute(sql, parameters=user, commit=True)
+        return self.execute(sql, parameters=user, fetchall=True)
 
-# ORDER BY order_id DESC LIMIT 5
+
+# WHERE user_id=? ORDER BY order_id DESC LIMIT 5
 
 
 def logger(statement):
